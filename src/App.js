@@ -1,6 +1,6 @@
 import './style.css';
 import React, { useState, useEffect } from 'react';
-
+import { debounce } from 'lodash';
 import {
   Button,
   Dropdown,
@@ -32,54 +32,66 @@ export default function App() {
 
   const [prefix, setPrefix] = useState(currItem.countryCode);
   useEffect(() => {
-    console.log('countryCodeLength', countryCodeLength);
+    //  console.log('countryCodeLength', countryCodeLength);
     countries?.map((item) => {
       if (
         item.countryCode.length > countryCodeLength &&
         countryCodeLength !== item.countryCode.length
       ) {
-        console.log('item.countryCode.length', item.countryCode.length);
+        //        console.log('item.countryCode.length', item.countryCode.length);
 
         setCountryCodeLength(item.countryCode.length);
       }
     });
   }, []);
 
-  useEffect(() => {
-    console.log('inputValue---', inputValue, countryCodeLength);
-    if (inputValue) {
-      console.log('inputValue111', inputValue.length);
-      console.log('inputValue111', typeof inputValue);
+  const handleSeparate = (value) => {
+    console.log('codeSeparate', currentCountry.countryCode.length);
+
+    let codeSeparate =
+      value?.substring(0, currentCountry.countryCode.length) +
+      '-' +
+      value?.substring(currentCountry.countryCode.length, value.length);
+    console.log('codeSeparate', codeSeparate);
+    setInputValue(codeSeparate);
+  };
+
+  const handleSetCountryCode = (value) => {
+    //
+    if (value) {
+      // console.log('inputValue111', inputValue.length);
+      //console.log('inputValue111', typeof inputValue);
       for (let i = 0; i < countryCodeLength; i++) {
-       // if (inputValue?.length == i + 1) {
-    
+        // if (inputValue?.length == i + 1) {
 
-          console.log('inputValue?.length == 2', inputValue, i);
+        //console.log('inputValue?.length == 2', inputValue, i);
 
-          let code = inputValue?.substring(0, i + 1);
-          console.log('countrycode', code);
-          let countrycode = countries.find((f) => {
-            return f.countryCode === code
-          });
-          console.log('countrycode', countrycode);
-          countrycode?.code && setCurrentCountry(countrycode);
-          countrycode?.code && setCountryCode(countrycode?.code);
-       // }
+        let code = value?.substring(0, i + 1);
+        //console.log('countrycode', code);
+        let countrycode = countries.find((f) => {
+          return f.countryCode === code;
+        });
+        //console.log('countrycode', countrycode);
+        countrycode?.code && setCurrentCountry(countrycode);
+        countrycode?.code && setCountryCode(countrycode?.code);
+        countrycode?.code && handleSeparate(value.replace('-', ''));
+        // }
       }
     }
-  }, [inputValue]);
+  };
+
   const handleChangeLanguage = (item, e) => {
-    console.log('handleChangeLanguage', item, e);
+    //console.log('handleChangeLanguage', item, e);
 
     let codeCurrentLength = currentCountry?.countryCode?.length;
     //let codeNewLength = currentCountry.countryCode.length
-    console.log('handleChangeLanguagecodeLength', codeCurrentLength);
+    //console.log('handleChangeLanguagecodeLength', codeCurrentLength);
 
     let oldinputValue = inputValue.substring(
       codeCurrentLength,
       inputValue.length
     );
-    console.log('handleChangeLanguagecodeLength', oldinputValue);
+    //console.log('handleChangeLanguagecodeLength', oldinputValue);
 
     let value = item.countryCode + oldinputValue;
     setCountryCode(item.code);
@@ -88,8 +100,9 @@ export default function App() {
   };
   const handleChangeInput = (e) => {
     const targetValue = e.target.value;
-
+    console.log('targetValue', targetValue);
     setInputValue(e.target.value);
+    handleSetCountryCode(e.target.value);
   };
   return (
     <>
