@@ -1,5 +1,5 @@
 export const countries = [
-  { countryCode: '+938989', code: 'AF', text: 'Afghanistan  (+93)' },
+  { countryCode: '+93', code: 'AF', text: 'Afghanistan  (+93)' },
   { countryCode: '+358', code: 'AX', text: 'Åland Islands  (+358)' },
   { countryCode: '+355', code: 'AL', text: 'Albania  (+355)' },
   { countryCode: '+213', code: 'DZ', text: 'Algeria  (+213)' },

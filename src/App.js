@@ -47,62 +47,25 @@ export default function App() {
 
   useEffect(() => {
     console.log('inputValue---', inputValue, countryCodeLength);
-    if (inputValue && inputValue !== currItem.countryCode) {
+    if (inputValue) {
       console.log('inputValue111', inputValue.length);
       console.log('inputValue111', typeof inputValue);
       for (let i = 0; i < countryCodeLength; i++) {
-        if (inputValue?.length == i + 1) {
+       // if (inputValue?.length == i + 1) {
+    
+
           console.log('inputValue?.length == 2', inputValue, i);
 
           let code = inputValue?.substring(0, i + 1);
           console.log('countrycode', code);
           let countrycode = countries.find((f) => {
-            return f.countryCode.includes(code);
+            return f.countryCode === code
           });
           console.log('countrycode', countrycode);
           countrycode?.code && setCurrentCountry(countrycode);
           countrycode?.code && setCountryCode(countrycode?.code);
-        }
+       // }
       }
-
-      /*  if (inputValue?.length == 2) {
-        console.log('inputValue?.length == 2', inputValue);
-
-        let code = inputValue?.substring(0, 3);
-        console.log('countrycode', code);
-        let countrycode = countries.find((f) => {
-          return f.countryCode === code;
-        });
-        console.log('countrycode', countrycode);
-        countrycode?.code && setCurrentCountry(countrycode);
-        countrycode?.code && setCountryCode(countrycode?.code);
-      } else if (inputValue?.length == 3) {
-        console.log('inputValue?.length == 2', inputValue);
-
-        let code = inputValue?.substring(0, 4);
-        console.log('countrycode', code);
-
-        let countrycode = countries.find((f) => {
-          return f.countryCode === code;
-        });
-        countrycode?.code && setCountryCode(countrycode?.code);
-        countrycode?.code && setCurrentCountry(countrycode);
-
-        console.log('countrycode', countrycode);
-      } else if (inputValue?.length == 4) {
-        console.log('inputValue?.length == 2', inputValue);
-
-        let code = inputValue?.substring(0, 5);
-        console.log('countrycode', code);
-
-        let countrycode = countries.find((f) => {
-          return f.countryCode === code;
-        });
-        countrycode?.code && setCountryCode(countrycode?.code);
-        countrycode?.code && setCurrentCountry(countrycode);
-
-        console.log('countrycode', countrycode);
-      } */
     }
   }, [inputValue]);
   const handleChangeLanguage = (item, e) => {
